@@ -3,12 +3,11 @@ import { ProductModule } from './product.module';
 import { ValidationPipe } from '@nestjs/common';
 
 async function bootstrap() {
-  const app = await NestFactory.create(ProductModule);
-  app.useGlobalPipes(
+  const httpApp = await NestFactory.create(ProductModule);
+  httpApp.useGlobalPipes(
     new ValidationPipe({ whitelist: true, forbidNonWhitelisted: true }),
   );
-
-  await app.listen(process.env.PORT!);
+  await httpApp.listen(process.env.PORT!);
 
   console.log(`Product service running on HTTP port ${process.env.PORT!}`);
 }

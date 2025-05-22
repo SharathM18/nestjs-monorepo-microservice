@@ -4,6 +4,7 @@ import { CategoryService } from './category.service';
 import { ConfigModule, ConfigService } from '@nestjs/config';
 import { MongooseModule } from '@nestjs/mongoose';
 import { Category, CategorySchema } from './schema/category.schema';
+import { ClientsModule, Transport } from '@nestjs/microservices';
 
 @Module({
   imports: [

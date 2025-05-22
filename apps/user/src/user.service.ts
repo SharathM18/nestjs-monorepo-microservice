@@ -52,6 +52,6 @@ export class UserService {
   }
 
   async getUserById(id: string): Promise<UserDocument | null> {
-    return await this.userModel.findOne({ _id: id }).exec();
+    return await this.userModel.findById(id).exec();
   }
 }

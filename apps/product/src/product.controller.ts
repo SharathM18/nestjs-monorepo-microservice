@@ -6,6 +6,7 @@ import {
   Param,
   Post,
   Put,
+  Query,
 } from '@nestjs/common';
 import { ProductService } from './product.service';
 import { CreateProductDto, UpdateProductDto } from '@library/shared/dto';
@@ -36,8 +37,11 @@ export class ProductController {
   }
 
   @Get('products')
-  async getAllProducts() {
-    const product = await this.productService.getAllProducts();
+  async getAllProducts(
+    @Query('category') category?: string,
+    @Query('sort') sort?: string,
+  ) {
+    const product = await this.productService.getAllProducts(category, sort);
     return {
       status: 'success',
       message: 'All products retrieves successfully!',

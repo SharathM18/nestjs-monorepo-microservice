@@ -1,12 +1,12 @@
 import { NestFactory } from '@nestjs/core';
-import { MicroserviceOptions, Transport } from '@nestjs/microservices';
 import { CategoryModule } from './category.module';
+import { MicroserviceOptions, Transport } from '@nestjs/microservices';
 
 async function bootstrap() {
-  //   const httpApp = await NestFactory.create(CategoryModule);
-  //   await httpApp.listen(process.env.PORT!);
+  const httpApp = await NestFactory.create(CategoryModule);
+  await httpApp.listen(process.env.PORT!);
 
-  //   console.log(`Category service running on HTTP port ${process.env.PORT!}`);
+  console.log(`Category service running on HTTP port ${process.env.PORT!}`);
 
   const tcpApp = await NestFactory.createMicroservice<MicroserviceOptions>(
     CategoryModule,
@@ -21,7 +21,7 @@ async function bootstrap() {
 
   await tcpApp.listen();
   console.log(
-    `User microservice running on TCP port ${process.env.CATEGORY_TCP_PORT!}`,
+    `Category microservice running on TCP port ${process.env.CATEGORY_TCP_PORT!}`,
   );
 }
 bootstrap();

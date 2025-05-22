@@ -31,5 +31,5 @@ export class UpdateProductDto {
   sellerId: string;
 
   @IsString()
-  category: string; // can be ObjectId or category name
+  categoryId: string; // can be ObjectId or category name
 }

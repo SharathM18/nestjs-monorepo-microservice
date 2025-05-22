@@ -50,6 +50,8 @@ export class AuthService {
 
     const token = this.jwtService.sign(payload);
 
+    delete user.password;
+
     return { user, token };
   }
 
@@ -57,7 +59,7 @@ export class AuthService {
     const { email, password } = loginDto;
 
     const existingUser = await firstValueFrom(
-      this.userClient.send({ cmd: 'findUserByEmail' }, { email }),
+      this.userClient.send({ cmd: 'findUserByEmail' }, email),
     );
 
     if (!existingUser) {
@@ -80,6 +82,8 @@ export class AuthService {
     };
 
     const token = this.jwtService.sign(payload);
+
+    delete existingUser.password;
 
     return { existingUser, token };
   }

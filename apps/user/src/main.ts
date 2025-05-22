@@ -1,9 +1,13 @@
 import { NestFactory } from '@nestjs/core';
 import { UserModule } from './user.module';
 import { MicroserviceOptions, Transport } from '@nestjs/microservices';
+import { ValidationPipe } from '@nestjs/common';
 
 async function bootstrap() {
   const httpApp = await NestFactory.create(UserModule);
+  httpApp.useGlobalPipes(
+    new ValidationPipe({ whitelist: true, forbidNonWhitelisted: true }),
+  );
   httpApp.listen(process.env.PORT!);
   console.log(`User service running on HTTP port ${process.env.PORT!}`);
 
@@ -17,7 +21,9 @@ async function bootstrap() {
       },
     },
   );
-
+  tcpApp.useGlobalPipes(
+    new ValidationPipe({ whitelist: true, forbidNonWhitelisted: true }),
+  );
   await tcpApp.listen();
   console.log(
     `User microservice running on TCP port ${process.env.USER_TCP_PORT!}`,

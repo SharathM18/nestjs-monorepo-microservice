@@ -19,7 +19,7 @@ export class ProductService {
   ) {}
 
   async addProduct(dto: CreateProductDto): Promise<productDocument> {
-    const categoryId = await this.resolveCategory(dto.category);
+    const categoryId = await this.resolveCategory(dto.categoryId);
 
     const product = new this.productModel({
       ...dto,
@@ -67,8 +67,24 @@ export class ProductService {
     return product;
   }
 
-  async getAllProducts(): Promise<productDocument[]> {
-    return await this.productModel.find({});
+  async getAllProducts(
+    category?: string,
+    sort?: string,
+  ): Promise<productDocument[]> {
+    const query: any = {};
+    const sortOptions: any = {};
+
+    if (category) {
+      query.categoryId = category;
+    }
+
+    if (sort === 'price') {
+      sortOptions.price = 1; // Ascending
+    } else if (sort === '-price') {
+      sortOptions.price = -1; // Descending
+    }
+
+    return this.productModel.find(query).sort(sortOptions).exec();
   }
 
   async deleteProductById(id: string): Promise<void> {
@@ -90,7 +106,7 @@ export class ProductService {
       throw new BadRequestException('Invalid product ID format');
     }
 
-    const categoryId = await this.resolveCategory(dto.category);
+    const categoryId = await this.resolveCategory(dto.categoryId);
 
     const updatedProduct = await this.productModel
       .findByIdAndUpdate(
