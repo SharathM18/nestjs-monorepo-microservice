@@ -4,6 +4,12 @@ import { MicroserviceOptions, Transport } from '@nestjs/microservices';
 
 async function bootstrap() {
   const httpApp = await NestFactory.create(CategoryModule);
+
+  httpApp.enableCors({
+    origin: '*',
+    credential: true,
+  });
+
   await httpApp.listen(process.env.PORT!);
 
   console.log(`Category service running on HTTP port ${process.env.PORT!}`);
