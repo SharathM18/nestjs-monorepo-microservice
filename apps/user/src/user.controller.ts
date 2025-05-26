@@ -13,7 +13,7 @@ export class UserController {
   }
 
   @MessagePattern({ cmd: 'createUser' })
-  async createUser(@Payload() dto: RegisterUserDto) {
+  async createUser(@Payload() dto: any) {
     return this.userService.createUser(dto);
   }
 

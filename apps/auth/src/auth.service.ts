@@ -29,17 +29,15 @@ export class AuthService {
     }
 
     const hashedPassword = await bcrypt.hash(password, 10);
+    const userData = {
+      username,
+      email,
+      password: hashedPassword,
+      role,
+    };
 
     const user = await firstValueFrom(
-      this.userClient.send(
-        { cmd: 'createUser' },
-        {
-          username,
-          email,
-          password: hashedPassword,
-          role,
-        },
-      ),
+      this.userClient.send({ cmd: 'createUser' }, userData),
     );
 
     const payload = {

@@ -1,0 +1,33 @@
+services:
+  auth:
+    build:
+      context: .
+      dockerfile: apps/auth/Dockerfile
+    env_file:
+      - ./apps/auth/.env
+    ports:
+      - '3001:3001'
+  user:
+    build:
+      context: .
+      dockerfile: apps/user/Dockerfile
+    env_file:
+      - ./apps/user/.env
+    ports:
+      - '3002:3002'
+  product:
+    build:
+      context: .
+      dockerfile: apps/product/Dockerfile
+    env_file:
+      - ./apps/product/.env
+    ports:
+      - '3003:3003'
+  category:
+    build:
+      context: .
+      dockerfile: apps/category/Dockerfile
+    env_file:
+      - ./apps/category/.env
+    ports:
+      - '3004:3004'
